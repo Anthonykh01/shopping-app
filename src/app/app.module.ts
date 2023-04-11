@@ -7,12 +7,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { FormsModule } from '@angular/forms'; // Add this line to import FormsModule
 import { environment } from '../environments/environment';
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomePageModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: '',
@@ -28,10 +34,11 @@ const routes: Routes = [
     BrowserModule,
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    RouterModule.forRoot(routes) // Add this line to define the routes
+    AngularFireAuthModule,
+    RouterModule.forRoot(routes),
+    FormsModule, // Add this line to include FormsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
